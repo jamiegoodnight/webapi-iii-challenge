@@ -11,7 +11,7 @@ server.use(express.json());
 
 function capitalize(req, res, next) {
   if (req.body.name) {
-    res.status(200).json(req.body.name[0].toUpperCase);
+    req.body.name = req.body.name.toUpperCase();
     next();
   } else {
     next();

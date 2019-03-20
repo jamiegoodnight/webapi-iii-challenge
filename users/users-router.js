@@ -103,6 +103,7 @@ router.put("/:id", (req, res) => {
 
 router.get("/:id/posts", (req, res) => {
   const id = req.params.id;
+
   db.getUserPosts(id)
     .then(posts => {
       res.status(200).json(posts);
