@@ -7,6 +7,19 @@ const server = express();
 
 server.use(express.json());
 
+// Custom Middleware
+
+function capitalize(req, res, next) {
+  if (req.body.name) {
+    res.status(200).json(req.body.name[0].toUpperCase);
+    next();
+  } else {
+    next();
+  }
+}
+
+server.use(capitalize);
+
 server.get("/", (req, res) => {
   res.send(`
     <h2>Lambda Posts and Users API</h>

@@ -39,7 +39,7 @@ router.post("/", (req, res) => {
   const newUser = req.body;
 
   if (newUser.name) {
-    db.insert(newPost)
+    db.insert(newUser)
       .then(user => {
         res.status(201).json(user);
       })
@@ -49,9 +49,7 @@ router.post("/", (req, res) => {
           .json({ message: "there was an error saving your user" });
       });
   } else {
-    res
-      .status(400)
-      .json({ message: "please provide a title and contents for your post" });
+    res.status(400).json({ message: "please provide a name for your user" });
   }
 });
 
@@ -97,10 +95,23 @@ router.put("/:id", (req, res) => {
           .json({ message: "the user information could not be modified" });
       });
   } else {
-    res
-      .status(400)
-      .json({ message: "please provide a title and contents for this post" });
+    res.status(400).json({ message: "please provide a name for this user" });
   }
+});
+
+// GET posts made by a user object with a specified id ----------
+
+router.get("/:id/posts", (req, res) => {
+  const id = req.params.id;
+  db.getUserPosts(id)
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "the user's posts could not be retrieved" });
+    });
 });
 
 module.exports = router;
