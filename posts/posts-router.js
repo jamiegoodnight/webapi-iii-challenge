@@ -38,7 +38,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   const newPost = req.body;
 
-  if (newPost.title && newPost.contents) {
+  if (newPost.user_id && newPost.text) {
     db.insert(newPost)
       .then(post => {
         res.status(201).json(post);
